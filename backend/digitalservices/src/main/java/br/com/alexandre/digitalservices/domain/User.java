@@ -1,7 +1,9 @@
 package br.com.alexandre.digitalservices.domain;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "users")
@@ -20,9 +22,9 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @JsonIgnore
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    // Construtores
     public User() {}
 
     public User(String name, String email, String password) {

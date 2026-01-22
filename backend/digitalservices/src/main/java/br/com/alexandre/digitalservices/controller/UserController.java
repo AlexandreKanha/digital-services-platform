@@ -1,7 +1,8 @@
 package br.com.alexandre.digitalservices.controller;
 
-import br.com.alexandre.digitalservices.domain.User;
-import br.com.alexandre.digitalservices.repository.UserRepository;
+import br.com.alexandre.digitalservices.dto.CreateUserRequest;
+import br.com.alexandre.digitalservices.dto.UserResponse;
+import br.com.alexandre.digitalservices.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,21 +11,19 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
 
-    private final UserRepository userRepository;
+    private final UserService service;
 
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserController(UserService service) {
+        this.service = service;
     }
 
-    // Listar todos usuários
-    @GetMapping
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
-
-    // Criar novo usuário
     @PostMapping
-    public User createUser(@RequestBody User user) {
-        return userRepository.save(user);
+    public UserResponse create(@RequestBody CreateUserRequest request) {
+        return service.create(request);
+    }
+
+    @GetMapping
+    public List<UserResponse> list() {
+        return service.list();
     }
 }

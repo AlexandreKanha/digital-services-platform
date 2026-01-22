@@ -23,8 +23,6 @@ public class SecurityConfig {
             .httpBasic(httpBasic -> httpBasic.disable())
             .formLogin(formLogin -> formLogin.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/users/**").permitAll()
-                .requestMatchers("/actuator/**").permitAll()
                 .anyRequest().permitAll()
             );
 
