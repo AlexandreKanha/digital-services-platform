@@ -1,9 +1,9 @@
 package br.com.alexandre.digitalservices.dto;
 
 public class CreateUserRequest {
-
     private String name;
     private String email;
+    private String password;
 
     public String getName() {
         return name;
@@ -11,5 +11,9 @@ public class CreateUserRequest {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }
