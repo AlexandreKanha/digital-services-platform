@@ -52,4 +52,9 @@ public class JwtService {
         String username = extractUsername(token);
         return username != null && username.equals(userDetails.getUsername()) && isTokenValid(token);
     }
+
+    public String extractRole(String token) {
+        Claims claims = extractAllClaims(token);
+        return claims == null ? null : claims.get("role", String.class);
+    }
 }
