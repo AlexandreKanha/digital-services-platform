@@ -5,6 +5,7 @@ import br.com.alexandre.digitalservices.dto.LoginResponse;
 import br.com.alexandre.digitalservices.dto.MeResponse;
 import br.com.alexandre.digitalservices.service.AuthService;
 import jakarta.annotation.PostConstruct;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,7 +24,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public LoginResponse login(@RequestBody LoginRequest request) {
+    public LoginResponse login(@Valid @RequestBody LoginRequest request) {
         return service.login(request);
     }
 

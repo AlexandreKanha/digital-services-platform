@@ -4,6 +4,7 @@ import br.com.alexandre.digitalservices.dto.CreateUserRequest;
 import br.com.alexandre.digitalservices.dto.UserResponse;
 import br.com.alexandre.digitalservices.service.UserService;
 import jakarta.annotation.PostConstruct;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public class UserController {
     }
 
     @PostMapping
-    public UserResponse create(@RequestBody CreateUserRequest request) {
+    public UserResponse create(@Valid @RequestBody CreateUserRequest request) {
         return service.create(request);
     }
 
