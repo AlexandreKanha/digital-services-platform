@@ -4,6 +4,7 @@ import br.com.alexandre.digitalservices.domain.User;
 import br.com.alexandre.digitalservices.dto.CreateUserRequest;
 import br.com.alexandre.digitalservices.dto.UserResponse;
 import br.com.alexandre.digitalservices.repository.UserRepository;
+import br.com.alexandre.digitalservices.security.Role;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +31,8 @@ public class UserService {
         User user = new User(
             request.getName(),
             request.getEmail(),
-            hashedPassword
+            hashedPassword,
+            Role.ROLE_ADMIN
         );
         User saved = repository.save(user);
 
