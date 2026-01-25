@@ -1,23 +1,34 @@
 # Digital Services Platform – Backend API
 
-Backend em Java que simula uma plataforma de serviços digitais e assinaturas no modelo B2B2C, inspirado em soluções de mercado para gestão de usuários, serviços, assinaturas e cobranças recorrentes.
+Backend API developed in Java to simulate a B2B2C digital services and subscription platform.  
+The project is inspired by real-world solutions for user management, services, subscriptions, and recurring billing.
 
-## Objetivo
-Projeto desenvolvido para fins de estudo e portfólio, com foco em:
-- APIs RESTful
-- Arquitetura em camadas
-- Testes de unidade
-- Boas práticas de desenvolvimento backend
+## Project Purpose
+This project was created for study and portfolio purposes, with a focus on backend fundamentals and best practices, including:
 
-## Tecnologias (previstas)
+- RESTful API development
+- Layered architecture (Controller, Service, Repository)
+- Authentication and authorization using JWT
+- Unit testing
+- Clean and maintainable code
+
+## Key Features (in progress)
+- User authentication and authorization
+- Management of users, services, and subscriptions
+- Secure endpoints using Spring Security and JWT
+- RESTful endpoints following best practices
+
+## Technologies
 - Java 17
 - Spring Boot
 - Spring Web
 - Spring Data JPA
 - Spring Security (JWT)
-- JUnit 5 e Mockito
 - PostgreSQL / H2
-- Swagger (OpenAPI)
+- JUnit 5 and Mockito
+- OpenAPI (Swagger)
 
-## Status do projeto
-🚧 Em desenvolvimento
+## Project Status
+🚧 **In development**
+
+This project is under active development and new features are being added progressively.
