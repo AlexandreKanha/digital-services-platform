@@ -2,6 +2,7 @@ package br.com.alexandre.digitalservices.controller;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -45,6 +46,7 @@ class AuthControllerTest {
     userRepository.deleteAll();
   }
 
+  @DisplayName("Should login successfully and return a valid token")
   @Test
   void shouldLoginAndReturnToken() throws Exception {
 

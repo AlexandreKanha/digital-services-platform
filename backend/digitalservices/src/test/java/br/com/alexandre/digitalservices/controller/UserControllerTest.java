@@ -1,6 +1,7 @@
 package br.com.alexandre.digitalservices.controller;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ class UserControllerTest {
     @LocalServerPort
     private int port;
 
+    @DisplayName("Should return 403 Forbidden when accessing /users without a token")
     @Test
     void shouldReturn403WithoutToken() {
         RestClient restClient = RestClient.create();

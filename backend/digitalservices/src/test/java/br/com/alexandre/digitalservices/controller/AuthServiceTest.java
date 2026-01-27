@@ -9,6 +9,7 @@ import br.com.alexandre.digitalservices.security.JwtService;
 import br.com.alexandre.digitalservices.security.Role;
 import br.com.alexandre.digitalservices.service.AuthService;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -48,6 +49,7 @@ class AuthServiceTest {
         SecurityContextHolder.clearContext();
     }
 
+    @DisplayName("Should throw exception when user is not found")
     @Test
     void shouldThrowWhenUserNotFound() {
         when(repository.findByEmail(anyString())).thenReturn(Optional.empty());
@@ -60,6 +62,7 @@ class AuthServiceTest {
         verify(repository).findByEmail("missing@example.com");
     }
 
+    @DisplayName("Should throw exception when password does not match")
     @Test
     void shouldThrowWhenPasswordDoesNotMatch() {
         var user = new User("Name", "user@example.com", "encoded", Role.ROLE_USER);
@@ -74,6 +77,7 @@ class AuthServiceTest {
         verify(encoder).matches("wrong", "encoded");
     }
 
+    @DisplayName("Should return token when credentials are valid")
     @Test
     void shouldReturnTokenWhenCredentialsValid() {
         var user = new User("Name", "user@example.com", "encoded", Role.ROLE_ADMIN);
@@ -90,6 +94,7 @@ class AuthServiceTest {
         assertEquals("tok-123", resp.getToken());
     }
 
+    @DisplayName("Should return Me response from SecurityContext")
     @Test
     void shouldReturnMeResponseFromSecurityContext() {
         Authentication auth = mock(Authentication.class);
