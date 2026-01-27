@@ -7,6 +7,7 @@ import br.com.alexandre.digitalservices.repository.UserRepository;
 import br.com.alexandre.digitalservices.security.JwtService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,10 +26,10 @@ public class AuthService {
 
     public LoginResponse login(LoginRequest request) {
         var user = repository.findByEmail(request.getEmail())
-            .orElseThrow(() -> new RuntimeException("Usuario ou senha invalidos"));
+            .orElseThrow(() -> new BadCredentialsException("Usuario ou senha invalidos"));
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Usuario ou senha invalidos");
+            throw new BadCredentialsException("Usuario ou senha invalidos");
         }
 
         String token = jwtService.generateToken(
