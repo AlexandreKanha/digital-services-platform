@@ -4,11 +4,19 @@ import br.com.alexandre.digitalservices.dto.CreateUserRequest;
 import br.com.alexandre.digitalservices.dto.UserResponse;
 import br.com.alexandre.digitalservices.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.PostConstruct;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 import java.util.List;
 
@@ -29,9 +37,19 @@ public class UserController {
     }
 
     @Operation(summary = "Create a new user")
+    @ApiResponses({
+        @ApiResponse(responseCode = "201", description = "Created",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponse.class))),
+        @ApiResponse(responseCode = "400", description = "Bad Request")
+    })
     @PostMapping
-    public UserResponse create(@Valid @RequestBody CreateUserRequest request) {
-        return service.create(request);
+    public ResponseEntity<UserResponse> create(@Valid @RequestBody CreateUserRequest request) {
+        UserResponse created = service.create(request);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+            .path("/{id}")
+            .buildAndExpand(created.getId())
+            .toUri();
+        return ResponseEntity.created(location).body(created);
     }
 
     @Operation(summary = "List all users (ADMIN only)")
