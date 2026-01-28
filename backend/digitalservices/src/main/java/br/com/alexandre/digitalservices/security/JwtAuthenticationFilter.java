@@ -1,5 +1,6 @@
 package br.com.alexandre.digitalservices.security;
 
+import org.springframework.lang.NonNull;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,9 +27,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(
-        HttpServletRequest request,
-        HttpServletResponse response,
-        FilterChain filterChain
+        @NonNull HttpServletRequest request,
+        @NonNull HttpServletResponse response,
+        @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
 
         String authHeader = request.getHeader("Authorization");
@@ -42,10 +43,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String email = jwtService.extractUsername(token);
 
         if (email != null && jwtService.isTokenValid(token)) {
+
             String role = jwtService.extractRole(token);
             List<SimpleGrantedAuthority> authorities = new ArrayList<>();
             if (role != null) {
-                authorities.add(new SimpleGrantedAuthority(role));
+                String authority = role.startsWith("ROLE_") ? role : "ROLE_" + role;
+                authorities.add(new SimpleGrantedAuthority(authority));
             }
 
             var authentication = new UsernamePasswordAuthenticationToken(

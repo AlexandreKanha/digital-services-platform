@@ -9,6 +9,10 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+//import org.springframework.security.web.access.AccessDeniedHandler;
+//import org.springframework.security.web.AuthenticationEntryPoint;
+import br.com.alexandre.digitalservices.security.RestAuthenticationEntryPoint;
+import br.com.alexandre.digitalservices.security.RestAccessDeniedHandler;
 import br.com.alexandre.digitalservices.security.JwtAuthenticationFilter;
 
 @Configuration
@@ -42,6 +46,10 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/users").permitAll()
                 .requestMatchers(HttpMethod.GET, "/users").hasRole("ADMIN")
                 .anyRequest().authenticated()
+            )
+            .exceptionHandling(ex -> ex
+                .authenticationEntryPoint(new RestAuthenticationEntryPoint())
+                .accessDeniedHandler(new RestAccessDeniedHandler())
             )
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 

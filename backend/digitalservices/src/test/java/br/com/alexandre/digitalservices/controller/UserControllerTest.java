@@ -17,7 +17,7 @@ class UserControllerTest {
     @LocalServerPort
     private int port;
 
-    @DisplayName("Should return 403 Forbidden when accessing /users without a token")
+    @DisplayName("Should return 401 Unauthorized when accessing /users without a token")
     @Test
     void shouldReturn403WithoutToken() {
         RestClient restClient = RestClient.create();
@@ -30,6 +30,6 @@ class UserControllerTest {
                 .body(String.class)
         );
         
-        assertEquals(HttpStatus.FORBIDDEN, exception.getStatusCode());
+assertEquals(HttpStatus.UNAUTHORIZED, exception.getStatusCode());
     }
 }

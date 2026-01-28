@@ -37,6 +37,7 @@ class AuthControllerTest {
 
 
   @BeforeEach
+  @SuppressWarnings("null")
   void setup() {
     this.mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
   }
@@ -48,6 +49,7 @@ class AuthControllerTest {
 
   @DisplayName("Should login successfully and return a valid token")
   @Test
+  @SuppressWarnings("null")
   void shouldLoginAndReturnToken() throws Exception {
 
 

@@ -26,16 +26,14 @@ public class AuthService {
 
     public LoginResponse login(LoginRequest request) {
         var user = repository.findByEmail(request.getEmail())
-            .orElseThrow(() -> new BadCredentialsException("Usuario ou senha invalidos"));
+            .orElseThrow(() -> new BadCredentialsException("Invalid username or password"));
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new BadCredentialsException("Usuario ou senha invalidos");
+            throw new BadCredentialsException("Invalid username or password");
         }
 
-        String token = jwtService.generateToken(
-            user.getEmail(),
-            user.getRole().name()
-        );
+        // Gera o token JWT dinamicamente no login
+        String token = jwtService.generateToken(user.getEmail(), user.getRole().name());
         return new LoginResponse(token);
     }
 

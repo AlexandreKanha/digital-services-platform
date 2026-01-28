@@ -3,51 +3,41 @@ package br.com.alexandre.digitalservices.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import jakarta.annotation.PostConstruct;
-import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 @Service
 public class JwtService {
 
-    private final String secret;
-    private final long expirationMs;
+    //
     private final Logger logger = LoggerFactory.getLogger(JwtService.class);
 
-    public JwtService(@Value("${jwt.secret:change-me}") String secret,
-                      @Value("${jwt.expiration:3600000}") long expirationMs) {
-        this.secret = secret;
-        this.expirationMs = expirationMs;
-    }
+    private static final String SECRET = "dev-secret-key-12345678901234567890123456789012"; // 32+ chars
 
-    @PostConstruct
-    public void validateConfig() {
-        if (secret == null || secret.getBytes(StandardCharsets.UTF_8).length < 32
-            || "change-me".equals(secret)) {
-            logger.warn("JWT secret is weak or unset. For local testing this is allowed, but do not use 'change-me' in production.");
-        }
-    }
+    public JwtService() {}
+
 
     public String generateToken(String email, String role) {
+        long now = System.currentTimeMillis();
+        Date issuedAt = new Date(now);
+        Date expiration = new Date(now + 3600_000); // 1 hora
         return Jwts.builder()
             .subject(email)
             .claim("role", role)
-            .issuedAt(new Date())
-            .expiration(new Date(System.currentTimeMillis() + expirationMs))
-            .signWith(Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8)))
+            .issuedAt(issuedAt)
+            .expiration(expiration)
+            .signWith(Keys.hmacShaKeyFor(SECRET.getBytes()))
             .compact();
     }
+
 
     private Claims extractAllClaims(String token) {
         try {
             return Jwts.parser()
-                .verifyWith(Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8)))
+                .verifyWith(Keys.hmacShaKeyFor(SECRET.getBytes()))
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();

@@ -4,7 +4,6 @@ import br.com.alexandre.digitalservices.domain.User;
 import br.com.alexandre.digitalservices.dto.CreateUserRequest;
 import br.com.alexandre.digitalservices.dto.UserResponse;
 import br.com.alexandre.digitalservices.repository.UserRepository;
-import br.com.alexandre.digitalservices.security.Role;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +22,7 @@ public class UserService {
 
     public UserResponse create(CreateUserRequest request) {
         if (repository.existsByEmail(request.getEmail())) {
-            throw new IllegalArgumentException("Email já cadastrado");
+            throw new IllegalArgumentException("Email already registered");
         }
 
         String hashedPassword = passwordEncoder.encode(request.getPassword());
@@ -32,7 +31,7 @@ public class UserService {
             request.getName(),
             request.getEmail(),
             hashedPassword,
-            Role.ROLE_ADMIN
+            br.com.alexandre.digitalservices.security.Role.ROLE_ADMIN // Força todo usuário como admin
         );
         User saved = repository.save(user);
 
