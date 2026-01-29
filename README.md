@@ -13,31 +13,20 @@
 
 RESTful API for authentication, authorization, and user management using JWT and role-based access control.
 
-📋 Table of Contents
+## 📋 Table of Contents
 
-Overview
-
-Technologies
-
-Architecture
-
-Security Model
-
-API Endpoints
-
-Validation & Error Handling
-
-API Documentation
-
-How to Run
-
-Testing
-
-Future Improvements
-
-Author
-
-License
+- [Overview](#-overview)
+- [Technologies](#-technologies--stack)
+- [Architecture](#-architecture)
+- [Security Model](#-security-model)
+- [API Endpoints](#-api-endpoints)
+- [Validation & Error Handling](#-validation--error-handling)
+- [API Documentation](#-api-documentation)
+- [How to Run](#-how-to-run)
+- [Testing](#-testing)
+- [Future Improvements](#-future-improvements)
+- [Author](#-author)
+- [License](#-license)
 
 🚀 Overview
 
@@ -67,23 +56,25 @@ Main Goals
 ✅ Automated tests (unit + integration)
 ✅ Simple in-memory database for development
 
-🛠️ Technologies & Stack
-Technology	Purpose
-Java 17	Programming language
-Spring Boot 3.x	Application framework
-Spring Web MVC	RESTful API
-Spring Security	Authentication & authorization
-JWT (jjwt)	Token-based security
-Spring Data JPA	Persistence layer
-H2 Database	In-memory database (dev/test)
-Bean Validation	Input validation
-OpenAPI 3.1	API specification
-Swagger UI	Interactive API docs
-JUnit 5	Testing framework
-Mockito	Unit test mocking
-MockMvc	Integration testing
-Maven	Build & dependency management
-Git	Version control
+## 🛠️ Technologies & Stack
+
+| Technology | Purpose |
+|-----------|---------|
+| Java 17 | Programming language |
+| Spring Boot 3.5.10 | Application framework |
+| Spring Web MVC | RESTful API |
+| Spring Security | Authentication & authorization |
+| JWT (jjwt) | Token-based security |
+| Spring Data JPA | Persistence layer |
+| H2 Database | In-memory database (dev/test) |
+| Bean Validation | Input validation |
+| OpenAPI 3.1 | API specification |
+| Swagger UI | Interactive API docs |
+| JUnit 5 | Testing framework |
+| Mockito | Unit test mocking |
+| MockMvc | Integration testing |
+| Maven | Build & dependency management |
+| Git | Version control |
 📁 Architecture
 
 The project follows a layered architecture, separating concerns clearly:
@@ -99,44 +90,53 @@ The project follows a layered architecture, separating concerns clearly:
 ┌──────────────┐
 │ Repository   │  → Persistence (JPA / H2)
 └──────────────┘
+```
 
-Responsibilities
-Layer	Responsibility
-Controller	Handles requests & responses
-Service	Business logic, authentication, authorization
-Repository	Database access
-Security	JWT, filters, roles, access control
-DTOs	API contracts (request / response)
-Benefits
+### Responsibilities
 
-✅ High cohesion
+| Layer | Responsibility |
+|-------|----------------|
+| Controller | Handles requests & responses |
+| Service | Business logic, authentication, authorization |
+| Repository | Database access |
+| Security | JWT, filters, roles, access control |
+| DTOs | API contracts (request / response) |
 
-✅ Low coupling
+### Benefits
 
-✅ Easy testing
-
+✅ High cohesion  
+✅ Low coupling  
+✅ Easy testing  
 ✅ Scalable structure
 
 🔐 Security Model
 
 The API uses stateless JWT authentication.
 
-Authentication Flow
+### Authentication Flow
+```
 Client → /auth/login → JWT Token
 Client → Authorization: Bearer <token>
 Spring Security → Role & permission validation
+```
 
-Roles
-Role	Permissions
-ROLE_USER	Access own data
-ROLE_ADMIN	Manage users, list all users
-JWT Claims
+### Roles
+
+| Role | Permissions |
+|------|-------------|
+| ROLE_USER | Access own data |
+| ROLE_ADMIN | Manage users, list all users |
+
+### JWT Claims
+
+```json
 {
   "sub": "user@email.com",
   "role": "ROLE_ADMIN",
   "iat": 1700000000,
   "exp": 1700003600
 }
+```
 
 🔗 API Endpoints
 Authentication
@@ -184,16 +184,18 @@ Status	Description
 401 Unauthorized	Missing / invalid token
 403 Forbidden	Insufficient role
 500 Internal Server Error	Unexpected error
-⚠️ Validation & Error Handling
 
 The API uses Bean Validation and a GlobalExceptionHandler.
 
-Validation Example
+### Validation Example
+```java
 @NotBlank
 @Email
 private String email;
+```
 
-Error Response Example
+### Error Response Example
+```json
 {
   "status": 400,
   "message": "Validation failed",
@@ -201,102 +203,100 @@ Error Response Example
     "email": "must be a well-formed email address"
   }
 }
+```
 
+**Handled exceptions include:**
+- Validation errors
+- Authentication failures
+- Access denied
+- Illegal arguments
+- Unexpected server errors
 
-Handled exceptions include:
-
-Validation errors
-
-Authentication failures
-
-Access denied
-
-Illegal arguments
-
-Unexpected server errors
-
-📚 API Documentation
+## 📚 API Documentation
 
 The API is documented with OpenAPI 3.1 and Swagger UI.
 
 After running the project, access:
 
-🔗 http://localhost:8080/swagger-ui.html
+🔗 **http://localhost:8080/swagger-ui.html**
 
-Features
+### Features
+- 📖 Endpoint documentation
+- 🧪 Interactive testing
+- 🔐 JWT authorization via Swagger
 
-📖 Endpoint documentation
+## ▶️ How to Run
 
-🧪 Interactive testing
+### Prerequisites
+- ☕ Java 17+
+- 📦 Maven
 
-🔐 JWT authorization via Swagger
+### Steps
 
-▶️ How to Run
-Prerequisites
-
-☕ Java 17+
-
-📦 Maven
-
-Steps
+```bash
 # Clone the repository
-git clone https://github.com/AlexandreKanha/digital-services-api.git
+git clone https://github.com/AlexandreKanha/digital-services-platform.git
 
 # Enter project directory
-cd digital-services-api
+cd digital-services-platform/backend/digitalservices
 
 # Run application
 mvn spring-boot:run
-
+```
 
 Application will be available at:
 
-🔗 http://localhost:8080
+🔗 **http://localhost:8080**
 
-🧪 Testing
+## 🧪 Testing
 
 The project includes unit and integration tests.
 
-Test Strategy
-Type	Description
-✅ Unit Tests	Service layer with Mockito
-✅ Integration Tests	Controllers with MockMvc
-✅ Security Tests	JWT + role validation
-✅ Exception Tests	Validation and access errors
-Run Tests
+### Test Strategy
+
+| Type | Description |
+|------|-------------|
+| ✅ Unit Tests | Service layer with Mockito |
+| ✅ Integration Tests | Controllers with MockMvc |
+| ✅ Security Tests | JWT + role validation |
+| ✅ Exception Tests | Validation and access errors |
+
+### Run Tests
+```bash
 mvn test
+```
 
-Example Scenarios Covered
-✓ Login with valid credentials returns JWT
-✓ Login with invalid password throws 401
-✓ Access protected endpoint without token returns 401
-✓ USER role cannot access ADMIN endpoint
-✓ ADMIN role can list users
+### Example Scenarios Covered
+- ✓ Login with valid credentials returns JWT
+- ✓ Login with invalid password throws 401
+- ✓ Access protected endpoint without token returns 401
+- ✓ USER role cannot access ADMIN endpoint
+- ✓ ADMIN role can list users
+- ✓ Invalid email format returns validation error
+- ✓ Email already registered returns error
 
-🔮 Future Improvements
-Feature	Description
-🐳 Docker	Containerization
-🔄 Refresh Token	Token renewal strategy
-🔐 OAuth2	External authentication providers
-🧱 Hexagonal Architecture	Further decoupling
-📊 Metrics	Micrometer + Prometheus
-🗄️ PostgreSQL	Replace H2 for production
-🚀 CI/CD	GitHub Actions pipeline
-👨‍💻 Author
-<div align="center">
+## 🔮 Future Improvements
 
-Alexandre Kanha
+| Feature | Description |
+|---------|-------------|
+| 🐳 Docker | Containerization |
+| 🔄 Refresh Token | Token renewal strategy |
+| 🔐 OAuth2 | External authentication providers |
+| 🧱 Hexagonal Architecture | Further decoupling |
+| 📊 Metrics | Micrometer + Prometheus |
+| 🗄️ PostgreSQL | Replace H2 for production |
+| 🚀 CI/CD | GitHub Actions pipeline |
+| 📧 Email | Email verification & notifications |
+## 👨‍💻 Author
 
+**Alexandre Kanha**  
 Backend Developer | Java | Spring Boot | APIs | Security
 
+## 📄 License
 
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
 
-
-</div>
-📄 License
-
-This project is licensed under the MIT License — see the LICENSE
- file for details.
+---
 
 <div align="center">
 
