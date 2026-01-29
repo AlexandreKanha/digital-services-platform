@@ -32,7 +32,6 @@ public class SecurityIntegrationTest {
     @Test
     @DisplayName("Deve retornar 403 quando o usuário não for ADMIN")
     public void getUsers_withNonAdminToken_returns403() throws Exception {
-        // Verifique se o seu jwtService exige o prefixo "ROLE_" ou se ele adiciona automaticamente
         String token = jwtService.generateToken("user@example.com", "USER");
 
         mockMvc.perform(get("/users")
