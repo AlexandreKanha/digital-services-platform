@@ -75,10 +75,12 @@ Main Goals
 | MockMvc | Integration testing |
 | Maven | Build & dependency management |
 | Git | Version control |
-📁 Architecture
+
+## 📁 Architecture
 
 The project follows a layered architecture, separating concerns clearly:
 
+```
 ┌──────────────┐
 │ Controller   │  → HTTP layer (REST endpoints)
 └──────┬───────┘
@@ -109,7 +111,7 @@ The project follows a layered architecture, separating concerns clearly:
 ✅ Easy testing  
 ✅ Scalable structure
 
-🔐 Security Model
+## 🔐 Security Model
 
 The API uses stateless JWT authentication.
 
